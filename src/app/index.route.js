@@ -8,14 +8,28 @@
   /** @ngInject */
   function routerConfig($stateProvider, $urlRouterProvider) {
     $stateProvider
-      .state('home', {
+      .state('main', {
         url: '/',
-        templateUrl: 'app/main/main.html',
-        controller: 'MainController',
-        controllerAs: 'main'
+        abstract: true,
+        views: {
+          '': {
+            templateUrl: 'app/main/main.html',
+            controller: 'MainController',
+            controllerAs: 'main'
+          },
+          'mainNavigation@main': {
+            templateUrl: 'app/components/mainNavigation/mainNavigation.html'
+          },
+          'currentUserSection@main': {
+            templateUrl: 'app/components/currentUser/currentUserSection.html'
+          },
+          'footer@main': {
+            templateUrl: 'app/components/footer/footer.html'
+          }
+        }
       });
 
-    $urlRouterProvider.otherwise('/');
+    $urlRouterProvider.otherwise('/home');
   }
 
 })();

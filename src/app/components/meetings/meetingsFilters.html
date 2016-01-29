@@ -1,0 +1,39 @@
+<section>
+	<h2>Filtry</h2>
+
+	<div>
+		<h3>Wybierz kategorię</h3>
+
+		<select name="meetings-filters-category"
+				id="meetings-filters-category" 
+				class="meetings-filters-category"
+				ng-model="meetingsCtrl.categoryModel"
+				ng-options="category.name for category in meetingsCtrl.categories"
+				ng-change="meetingsCtrl.categoryUpdated()">
+		</select>
+	</div>
+
+	<div>
+		<h3>Spotkanie dla</h3>
+
+		<select name="meetings-filters-gender"
+				id="meetings-filters-gender" 
+				class="meetings-filters-gender" 
+				ng-model="meetingsCtrl.models.gender" 
+				ng-options="gender.name for gender in meetingsCtrl.meetingsFilters.gender.values"
+				ng-change="meetingsCtrl.filtersUpdated('gender')"> 
+		</select>
+	</div>
+
+	<div>
+		<h3>Wybierz poziom</h3>
+
+		<select name="meetings-filters-level" 
+				id="meetings-filters-level" 
+				class="meetings-filters-level" 
+				ng-model="meetingsCtrl.models.level" 
+				ng-options="level.name for level in meetingsCtrl.meetingsFilters.level.values"
+				ng-change="meetingsCtrl.filtersUpdated('level')">
+		</select>
+	</div>
+</section>

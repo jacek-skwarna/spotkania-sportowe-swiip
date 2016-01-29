@@ -1,0 +1,25 @@
+<ul class="meetings-list">
+	<li class="meetings-list-item" ng-repeat="meeting in meetingCtrl.meetings">
+		<div>
+			Termin: <span class="date">{{meeting.meeting_date}}</span>
+		</div>
+
+		<div>
+			Spotkanie dla: <span class="gender">{{meeting.gender}}</span>
+		</div>
+
+		<div>
+			Poziom: <span class="level">{{meeting.level}}</span>
+		</div>
+
+		<div>
+			Ilość wolnych miejsc: <span class="free-places-counter">{{meeting.members_required - meeting.assigned_users_ids.length}}</span>
+		</div>
+
+		<div class="address">
+			<span class="city">{{meeting.venue}}</span>
+		</div>
+
+		<a href="" ui-sref=".meetingDetails({meetingid: meeting._id})">Więcej</a>
+	</li>
+</ul>

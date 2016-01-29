@@ -6,34 +6,42 @@
     .controller('MainController', MainController);
 
   /** @ngInject */
-  function MainController($timeout, webDevTec, toastr) {
-    var vm = this;
+  function MainController($log, $state, CurrentUser) {
+  	var vm = this;
 
-    vm.awesomeThings = [];
-    vm.classAnimation = '';
-    vm.creationDate = 1451999407084;
-    vm.showToastr = showToastr;
+  	vm.mainNavigation = [
+		{
+			name: 'Start',
+			state: 'main.home'
+		},
+		{
+			name: 'Kategorie',
+			state: 'main.categories'
+		},
+		{
+			name: 'Kontakt',
+			state: 'main.contact'
+		},
+		{
+			name: 'Regulamin',
+			state: 'main.terms'
+		},
+		{
+			name: 'Moje konto',
+			state: 'main.user'
+		}
+	];
 
-    activate();
+	vm.currentUser = new CurrentUser();
 
-    function activate() {
-      getWebDevTec();
-      $timeout(function() {
-        vm.classAnimation = 'rubberBand';
-      }, 4000);
-    }
+	vm.provideEmail = false;
+	vm.providePassword = false;
+	vm.login = function() {
+		$log.log('w main.login, vm.provideEmail: ' + vm.provideEmail + ', vm.providePassword: ' + vm.providePassword);
+		vm.currentUser.login(vm.provideEmail, vm.providePassword);
+	};
 
-    function showToastr() {
-      toastr.info('Fork <a href="https://github.com/Swiip/generator-gulp-angular" target="_blank"><b>generator-gulp-angular</b></a>');
-      vm.classAnimation = '';
-    }
-
-    function getWebDevTec() {
-      vm.awesomeThings = webDevTec.getTec();
-
-      angular.forEach(vm.awesomeThings, function(awesomeThing) {
-        awesomeThing.rank = Math.random();
-      });
-    }
+	// try authenticate user by token
+	//vm.currentUser.authenticateByToken();
   }
 })();

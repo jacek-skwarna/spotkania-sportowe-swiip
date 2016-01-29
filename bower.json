@@ -7,6 +7,8 @@
     "angular-ui-router": "~0.2.15",
     "foundation": "~5.5.2",
     "angular-foundation": "~0.6.0",
+    "angularjs-datetime-picker": "~0.1.20",
+    "ngmap": "~1.16.7",
     "malarkey": "yuanqing/malarkey#~1.3.1",
     "angular-toastr": "~1.5.0",
     "moment": "~2.10.6",
@@ -19,5 +21,13 @@
   "resolutions": {
     "jquery": "~2.1.4",
     "angular": "~1.4.2"
+  },
+  "overrides": {
+    "angularjs-datetime-picker": {
+      "main": ["angularjs-datetime-picker.js", "angularjs-datetime-picker.css"]
+    },
+    "ngmap": {
+      "main": "build/scripts/ng-map.js"
+    }
   }
 }

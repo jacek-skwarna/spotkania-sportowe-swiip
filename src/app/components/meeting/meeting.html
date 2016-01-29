@@ -1,0 +1,60 @@
+<div class="meeting-container">
+    <div class="meeting-menu">
+        <!-- <button class="meeting-unassign-button">Wypisz się</button> -->
+        <button class="meeting-assign-button" ng-show="isLoggedIn()" ng-click="joinMeeting()">Zapisz się</button>
+        <button class="meeting-show-contact-button" ng-click="toggleContactInfo = !toggleContactInfo">Dane kontaktowe organizatora</button>
+
+        <div class="meeting-owner-info" ng-show="toggleContactInfo">
+            e-mail: <a class="email" ng-href="mailto:{{meetingCtrl.meetingOwner.email}}">{{meetingCtrl.meetingOwner.email}}</a><br>
+            tel: <span class="tel">{{meetingCtrl.meetingOwner.phone}}</span>
+        </div>
+    </div>
+
+    <div class="notice-container" ng-show="meetingNotice !== ''">
+        {{meetingNotice}}
+    </div>
+
+    <div class="meeting-map-wrapper">
+		<ng-map zoom="14"></ng-map>
+
+        {{meetingCtrl.meeting.venue}}<br>
+        {{meetingCtrl.meeting.venue_coordinates}}
+    </div>
+
+    <div class="meeting-attributes">
+        <table>
+            <tr>
+                <td class="attribtue-name">
+                    Termin spotkania
+                </td>
+                <td class="attribtue-value">
+                    {{meetingCtrl.meeting.meeting_date}}
+                </td>
+            </tr>
+            <tr>
+                <td class="attribtue-name">
+                    Wolne miejsca
+                </td>
+                <td class="attribtue-value">
+                    {{meetingCtrl.meeting.members_required}}
+                </td>
+            </tr>
+            <tr>
+                <td class="attribtue-name">
+                    Spotkanie dla
+                </td>
+                <td class="attribtue-value">
+                    {{meetingCtrl.meeting.gender}}
+                </td>
+            </tr>
+            <tr>
+                <td class="attribtue-name">
+                    Poziom
+                </td>
+                <td class="attribtue-value">
+                    {{meetingCtrl.meeting.level}}/3
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

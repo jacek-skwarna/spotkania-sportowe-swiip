@@ -1,0 +1,5 @@
+<ul class="categories-list">
+	<li class="categories-list-item" ng-repeat="category in categoriesNavigationCtrl.categories">
+		<a ng-href="./#/meetings/{{category.url_suffix}}/0/{{categoriesNavigationCtrl.defaultLimit}}">{{category.name}}</a>
+	</li>
+</ul>
