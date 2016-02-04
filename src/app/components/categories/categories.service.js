@@ -23,8 +23,8 @@
 				.then(function(data) {
 					categoriesArray = data.results;
 					resolve(categoriesArray);
-				})
-				.catch(function() {
+				},
+				function() {
 					reject(categoriesArray);
 				});
 			}

@@ -15,10 +15,14 @@
     </div>
 
     <div class="meeting-map-wrapper">
-		<ng-map zoom="14"></ng-map>
+		  <ng-map zoom="14"></ng-map>
 
-        {{meetingCtrl.meeting.venue}}<br>
-        {{meetingCtrl.meeting.venue_coordinates}}
+      {{meetingCtrl.meeting.venue}}<br>
+      {{meetingCtrl.meeting.venue_coordinates}}
+    </div>
+
+    <div ui-view="loggedUserBox">
+
     </div>
 
     <div class="meeting-attributes">

@@ -1,0 +1,14 @@
+<form id="register-user-form" name="register-user-form" ng-submit="registerUserCtrl.register()">
+  <input id="email" name="email" type="text" class="form-control" placeholder="Email" required autofocus ng-model="registerUserCtrl.userData.email">
+  <input id="password" name="password" type="password" class="form-control" placeholder="Hasło" required ng-model="registerUserCtrl.userData.password">
+  <input id="nick" name="nick" type="text" class="form-control" placeholder="Nick" required ng-model="registerUserCtrl.userData.nick">
+  <input id="phone" name="phone" type="text" class="form-control" placeholder="Numer telefonu" required ng-model="registerUserCtrl.userData.phone">
+  <input type="radio" name="gender" value="m" checked required ng-model="registerUserCtrl.userData.gender">Mężczyzna<br>
+  <input type="radio" name="gender" value="f" required ng-model="registerUserCtrl.userData.gender">Kobieta
+
+  <button class="btn btn-lg btn-primary btn-block" type="submit">Wyślij</button>
+</form>
+
+<div class="user-registration-info" ng-show="registerUserCtrl.registerInfo">
+  {{registerUserCtrl.registerInfo}}
+</div>

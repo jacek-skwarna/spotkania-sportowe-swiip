@@ -1,33 +1,19 @@
 <div class="user-module-container">
-	<div class="user-login-form-wrapper" ng-show="!isLoggedIn()">
+	<div class="user-login-form-wrapper" ng-show="!currentUserCtrl.isLoggedIn()">
 		<p>Zaloguj się</p>
 
-	    <form id="user-login" name="user-login" class="form-signin">
-		    <input type="text" class="form-control" placeholder="Email" required autofocus ng-model="main.provideEmail">
-		    <input type="text" class="form-control" placeholder="Password" required ng-model="main.providePassword">
-		    <button class="btn btn-lg btn-primary btn-block" ng-click="main.login()">Zaloguj</button>
-	    </form>
+    <form id="user-login" name="user-login" class="form-signin" ng-submit="currentUserCtrl.login()">
+      <input type="text" class="form-control" placeholder="Email" required autofocus ng-model="currentUserCtrl.credentials.email">
+      <input type="password" class="form-control" placeholder="Password" required ng-model="currentUserCtrl.credentials.pass">
+      <button class="btn btn-lg btn-primary btn-block" type="submit">Zaloguj</button>
+    </form>
 
-	    <a href="./#/user/register" class="text-center new-account" ng-click="showRegisterForm = !showRegisterForm">Załóż konto</a>
-
-	    <div class="user-registration-form-wrapper" ng-show="showRegisterForm">
-	    	<div class="user-registration-info" ng-show="userRegistrationInfo">
-	    		{{userRegistrationInfo}}
-	    	</div>
-			<form id="user-registration" name="user-registration">
-			    <input id="email" name="email" type="text" class="form-control" placeholder="Email" required autofocus ng-model="registerEmail">
-			    <input id="password" name="password" type="password" class="form-control" placeholder="Hasło" required ng-model="registerPassword">
-			    <input id="nick" name="nick" type="text" class="form-control" placeholder="Nick" required ng-model="registerNick">
-			    <input id="phone" name="phone" type="text" class="form-control" placeholder="Numer telefonu" required ng-model="registerPhone">
-			    <input type="radio" name="gender" value="m" checked ng-model="registerGender">Mężczyzna<br>
-			    <input type="radio" name="gender" value="f" ng-model="registerGender">Kobieta
-
-			    <button class="btn btn-lg btn-primary btn-block" ng-click="register()">Wyślij</button>
-		    </form>
-		</div>
+    <a ui-sref="main.registerUser" class="text-center new-account">Załóż konto</a>
 	</div>
 
-	<div class="current-user-info-wrapper" ng-show="isLoggedIn()">
-		<p>Zalogowany jako: <span>{{user.email}}</span></p> <button ng-click="logout()">wyloguj się</button>
+	<div class="current-user-info-wrapper" ng-show="currentUserCtrl.isLoggedIn()">
+		<p>Zalogowany jako: <span>{{currentUserCtrl.currentUser.data.email}}</span></p> <button ng-click="currentUserCtrl.logout()">wyloguj się</button>
+    <br />
+    <a ui-sref="main.createMeeting">Utwórz spotkanie</a>
 	</div>
 </div>

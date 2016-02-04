@@ -2,13 +2,13 @@
 	'use strict';
 
 	angular
-	.module('spotkaniaSportoweSwiip', 
+	.module('spotkaniaSportoweSwiip',
 	[
-		'ngAnimate', 
-		'ui.router', 
-		'mm.foundation', 
-		'toastr',
+		'ngAnimate',
 		'currentUserModule',
+		'ui.router',
+		'mm.foundation',
+		'toastr',
 		'apiModule',
 		'homeModule',
 		'categoriesModule',
@@ -17,6 +17,12 @@
 		'meetingsModule',
 		'angularjs-datetime-picker',
 		'ngMap',
-		'storageModule'
+		'storageModule',
+		'mainNavigationModule',
+		'logonModule',
+		'tokenModule',
+    'registerUserModule',
+    'createMeetingModule',
+    'notificationPageModule'
 	]);
 })();
