@@ -21,7 +21,9 @@
             templateUrl: 'app/components/mainNavigation/mainNavigation.html'
           },
           'currentUserSection@main': {
-            templateUrl: 'app/components/currentUser/currentUserSection.html'
+            templateUrl: 'app/components/currentUser/currentUserSection.html',
+            controller: 'CurrentUserController',
+            controllerAs: 'currentUserCtrl'
           },
           'footer@main': {
             templateUrl: 'app/components/footer/footer.html'

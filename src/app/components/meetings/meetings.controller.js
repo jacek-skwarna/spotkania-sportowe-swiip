@@ -72,7 +72,7 @@
 			filteredItems = [];
 
 		for (var i = 0; i < paramsLength; i++) {
-			filteredItems = [];			
+			filteredItems = [];
 
 			if (typeof vm.meetingsFilters[keys[i]] !== 'undefined' && typeof vm.models[keys[i]] !== 'undefined') {
 				filteredItems = vm.meetingsFilters[keys[i]].values.filter(function(item) {
@@ -114,15 +114,15 @@
 	vm.filtersUpdated = function(filterName) {
 		var filter = {};
 		filter[filterName] = vm.models[filterName].value;
-		$state.go("meetingsInCategorySearch.list", filter);
+		$state.go("main.meetingsInCategorySearch.list", filter);
 	};
 
 	vm.categoryUpdated = function() {
-		$state.go("meetingsInCategorySearch.list", {category: vm.categoryModel.url_suffix});
+		$state.go("main.meetingsInCategorySearch.list", {category: vm.categoryModel.url_suffix});
 	};
 
 	vm.showMeetingDetail = function(meetingId) {
-		$state.go("meetingsInCategorySearch.meetingDetail", {meetingid: meetingId});
+		$state.go("main.meetingsInCategorySearch.meetingDetail", {meetingid: meetingId});
 	};
 
 	categories.getCategories()

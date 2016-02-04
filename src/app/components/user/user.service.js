@@ -24,11 +24,11 @@
 			user.loading = true;
 
 			return api.user({method: 'GET', params: {_id: user._id}}).then(
-				function (res) {
-					if (res.results) {
-						user.data = res.results;
+				function (results) {
+					if (results.results) {
+						user.data = results.results;
 					}
-					
+
 					user.loading = false;
 				}
 			);
