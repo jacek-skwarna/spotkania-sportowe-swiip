@@ -7,19 +7,26 @@
 
 	/** @ngInject */
 	function LogonService($log, tokenService, $q, api, $state, $stateParams) {
+    var currentUserId = null;
     var self = this;
+    var lastAuthenticationTime = Date.now();
+
+    //console.log('lastAuthenticationTime: ' + lastAuthenticationTime);
 
 		self.isLogged = isLogged;
 		self.login = login;
     self.logout = logout;
+    self.getCurrentUserId = getCurrentUserId;
 
 		///////////////////
 
     function isLogged() {
+      $log.log('lastAuthenticationTime: ' + lastAuthenticationTime);
       return $q(checkUser);
     }
 
 		function checkUser(resolve, reject) {
+      console.log('lastAuthenticationTime: ' + lastAuthenticationTime);
 			var token = tokenService.get();
 
 			if (!token) {
@@ -27,6 +34,15 @@
 			}
 
 			$log.log('token: ' + token + ', typeof token: ' + typeof token);
+
+      // check token only if it's older than 5 minutes
+      $log.log('Date.now() - lastAuthenticationTime = ' + (Date.now() - lastAuthenticationTime));
+
+      if (((Date.now() - lastAuthenticationTime) < 300000) && currentUserId) {
+        $log.log('w if');
+        return resolve(currentUserId);
+      }
+
 
 			api.authenticateByToken(
 				{
@@ -43,6 +59,9 @@
 				}
 
 				if (results.results._id) {
+          lastAuthenticationTime = Date.now();
+          currentUserId = results.results._id;
+
 					return resolve(results.results._id);
 				}
 
@@ -86,6 +105,7 @@
               });
 
               $log.log('zalogowałeś się');
+              currentUserId = user._id;
 
               return resolve(user._id);
             } else {
@@ -108,6 +128,10 @@
           inherit: false,
           notify: true
       });
+    }
+
+    function getCurrentUserId() {
+      return currentUserId;
     }
 	}
 })();

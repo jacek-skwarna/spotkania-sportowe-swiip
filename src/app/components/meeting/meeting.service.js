@@ -60,16 +60,13 @@
       );
     }
 
-/**
-    * @param itemName - it's a key used to store required value inside a localStorage
-    * @description
-    *   function returns a value stored under the given key (itemName param) or null when given key does not exist in localStorage.
-    *   If localStorage is not supported, function returns 'false'.
-    */
-
     /**
     * @description
     *   joinMeeting function assigns user with a given id to the meeting as a participant. It returns promise object.
+    * @param userId
+    *   it's an id of the user who wants to be assigned to meeting
+    * @param meetingId
+    *   it's an id of the meeting which the user wants to be assigned to
     */
     function joinMeeting(userId, meetingId) {
       return api.meeting({

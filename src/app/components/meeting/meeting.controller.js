@@ -6,26 +6,33 @@
 	.controller('MeetingController', MeetingController);
 
 	/** @ngInject */
-	function MeetingController($q, $window, $log, api, $state, $stateParams, NgMap, Meeting, User, isLoggedIn) {
+	function MeetingController($q, $window, $log, api, $state, $stateParams, NgMap, Meeting, User, logonService) {
 		var vm = this;
 		var _id = $stateParams._id || null;
 		var meeting = new Meeting(_id);
 		var meetingOwner = {};
     var inProgress = false;
-    var currentUserId = isLoggedIn;
-
-    $log.log('currentUserId: ' + currentUserId);
 
     vm.joinMeeting = joinMeeting;
 		vm.meeting = {};
 		vm.meetingOwner = {};
     vm.infoBoxMessage = '';
+    vm.currentUserId = null;
 
 		meeting.getData().then(function() {
 			vm.meeting = meeting.data;
 			initMeetingOwner(vm.meeting.owner_id);
 			showVenueOnMap(vm.meeting);
 		});
+
+    logonService.isLogged().then(
+      function(results) {
+        vm.currentUserId = results;
+      },
+      function() {
+        vm.currentUserId = null;
+      }
+    );
 
     /////////////////
 
@@ -72,16 +79,20 @@
       inProgress = true;
       $log.log('joinMeeting started.');
 
-      if (!vm.meeting._id) {
+      if (!vm.meeting._id || !vm.currentUserId) {
         vm.infoBoxMessage = 'Nie można zapisać się na to spotkanie. Spróbuj za chwilę.';
+        inProgress = false;
+        return;
       }
 
-      meeting.joinMeeting().then(
+      meeting.joinMeeting(vm.currentUserId, vm.meeting._id).then(
         function() {
           vm.infoBoxMessage = 'Zapisałeś się na to spotkanie.';
+          inProgress = false;
         },
         function(results) {
           vm.infoBoxMessage = 'Nie można zapisać się na to spotkanie. Błąd: ' + angular.toJson(results) + '.';
+          inProgress = false;
         }
       );
     }
