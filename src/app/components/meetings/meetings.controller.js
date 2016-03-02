@@ -63,6 +63,25 @@
 
 	setModelsByQueryParameters();
 
+  categories.getCategories()
+  .then(function(data) {
+    var selectedCategory = $stateParams.category,
+      selectedCategoryArray = [];
+    function filterCategory(item) {
+      return item.url_suffix === selectedCategory;
+    }
+
+    $log.log('$stateParams.category: ' + $stateParams.category);
+    selectedCategoryArray = data.filter(filterCategory);
+    vm.categories = data;
+
+    if (selectedCategoryArray.length) {
+      vm.categoryModel = selectedCategoryArray[0];
+    }
+
+    getMeetings(prepareParamsForMeetings());
+  });
+
 	function setModelsByQueryParameters() {
 		/*
 		set models based on current url
@@ -125,24 +144,7 @@
 		$state.go("main.meetingsInCategorySearch.meetingDetail", {meetingid: meetingId});
 	};
 
-	categories.getCategories()
-	.then(function(data) {
-		var selectedCategory = $stateParams.category,
-			selectedCategoryArray = [];
-		function filterCategory(item) {
-			return item.url_suffix === selectedCategory;
-		}
 
-		$log.log('$stateParams.category: ' + $stateParams.category);
-		selectedCategoryArray = data.filter(filterCategory);
-		vm.categories = data;
-
-		if (selectedCategoryArray.length) {
-			vm.categoryModel = selectedCategoryArray[0];
-		}
-
-		getMeetings(prepareParamsForMeetings());
-	});
 	/*
 	api.categories({method: 'GET'})
 	.then(function(data) {

@@ -12,7 +12,7 @@
 			url: 'meeting/:_id',
 			templateUrl: 'app/components/meeting/meeting.html',
 			controller: 'MeetingController',
-			controllerAs: 'meetingCtrl',
+			controllerAs: 'meetingCtrl'
 		});
 	}
 })();

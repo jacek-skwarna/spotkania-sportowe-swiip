@@ -26,7 +26,6 @@
     }
 
 		function checkUser(resolve, reject) {
-      console.log('lastAuthenticationTime: ' + lastAuthenticationTime);
 			var token = tokenService.get();
 
 			if (!token) {

@@ -1,19 +1,28 @@
-<div class="user-module-container">
-	<div class="user-login-form-wrapper" ng-show="!currentUserCtrl.isLoggedIn()">
-		<p>Zaloguj się</p>
+<div ng-show="!currentUserCtrl.isLoggedIn()" class="medium-6 medium-centered large-4 large-centered columns">
+	<button type="button" ng-click="currentUserCtrl.showLoginForm = !currentUserCtrl.showLoginForm" class="tiny radius">Zaloguj się</button> lub  <a ui-sref="main.registerUser" class="text-center new-account">Załóż konto</a>
 
-    <form id="user-login" name="user-login" class="form-signin" ng-submit="currentUserCtrl.login()">
-      <input type="text" class="form-control" placeholder="Email" required autofocus ng-model="currentUserCtrl.credentials.email">
-      <input type="password" class="form-control" placeholder="Password" required ng-model="currentUserCtrl.credentials.pass">
-      <button class="btn btn-lg btn-primary btn-block" type="submit">Zaloguj</button>
-    </form>
+  <form id="user-login" name="user-login" class="form-signin clear" ng-submit="currentUserCtrl.login()" ng-show="currentUserCtrl.showLoginForm">
+    <div class="column row log-in-form">
+      <h4 class="text-center">Zaloguj się</h4>
+      <label>Email
+        <input type="text" placeholder="twoj@email.pl" required autofocus ng-model="currentUserCtrl.credentials.email">
+      </label>
+      <label>Hasło
+        <input type="password" class="form-control" placeholder="Hasło" required ng-model="currentUserCtrl.credentials.pass">
+      </label>
 
-    <a ui-sref="main.registerUser" class="text-center new-account">Załóż konto</a>
-	</div>
+      <div>
+        <button type="submit">Zaloguj</button>
+      </div>
 
-	<div class="current-user-info-wrapper" ng-show="currentUserCtrl.isLoggedIn()">
-		<p>Zalogowany jako: <span>{{currentUserCtrl.currentUser.data.email}}</span></p> <button ng-click="currentUserCtrl.logout()">wyloguj się</button>
-    <br />
+    </div>
+  </form>
+</div>
+
+<div class="current-user-info-wrapper medium-6 medium-centered large-4 large-centered columns" ng-show="currentUserCtrl.isLoggedIn()">
+	Zalogowany: <span>{{currentUserCtrl.currentUser.data.email}}</span> <button ng-click="currentUserCtrl.logout()" class="tiny round">wyloguj się</button>
+
+  <div>
     <a ui-sref="main.createMeeting">Utwórz spotkanie</a>
-	</div>
+  </div>
 </div>

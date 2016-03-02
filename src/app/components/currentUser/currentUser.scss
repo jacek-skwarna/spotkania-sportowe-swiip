@@ -1,0 +1,12 @@
+.current-user-section {
+  @extend .row;
+
+  padding-top: 10px;
+
+  .log-in-form {
+    border: 1px solid #cacaca;
+    float: none;
+    padding: 1rem;
+    border-radius: 3px;
+  }
+}

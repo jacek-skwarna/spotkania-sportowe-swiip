@@ -6,11 +6,14 @@
 	.service('api', api);
 
 	/** @ngInject */
-	function api($log, $http, $q) {
+	function api($log, $http, $q, tokenService) {
 		var root = 'http://localhost:8080/';
 		var endpoints = {
 			categories: 'categories',
       createMeeting: 'protected/meeting/create',
+      updateMeeting: 'protected/meeting/:meetingId',
+      joinMeeting: 'protected/meeting/:meetingId/join',
+      meetingProtected: 'protected/meeting',
 			meeting: 'meeting',
 			meetings: 'meetings',
 			user: 'user',
@@ -52,12 +55,63 @@
 			return typeof configuration === 'undefined' ? request(endpoints.meetings) : request(endpoints.meetings, configuration);
 		};
 
+    // Meeting
 		this.meeting = function(configuration) {
 			return typeof configuration === 'undefined' ? request(endpoints.meeting) : request(endpoints.meeting, configuration);
 		};
 
+    this.updateMeeting = function(configuration) {
+      var conf = {
+        method: 'PUT',
+        headers: { 'x-access-token': tokenService.get() }
+      };
+      var endpoint = endpoints.updateMeeting;
+
+      if (typeof configuration !== 'undefined' && typeof configuration._id !== 'undefined') {
+        endpoint = endpoint.replace(':meetingId', configuration._id);
+        delete configuration._id;
+        angular.extend(conf, { data: configuration });
+      }
+
+      $log.log('api.updateMeeting, conf: ' + angular.toJson(conf));
+
+      return request(endpoint, conf);
+    };
+
+    this.joinMeeting = function(configuration) {
+      var conf = {
+        method: 'PUT',
+        headers: { 'x-access-token': tokenService.get() }
+      };
+      var endpoint = endpoints.joinMeeting;
+
+      if (typeof configuration !== 'undefined' && typeof configuration._id !== 'undefined') {
+        endpoint = endpoint.replace(':meetingId', configuration._id);
+        delete configuration._id;
+        angular.extend(conf, { data: configuration });
+      }
+
+      $log.log('api.joinMeeting, conf: ' + angular.toJson(conf));
+
+      return request(endpoint, conf);
+    };
+
+    this.meetingProtected = function(configuration) {
+      var conf = {};
+
+      angular.extend(conf, { headers: { 'x-access-token': tokenService.get() } });
+
+      if (typeof configuration !== 'undefined') {
+        angular.extend(conf, configuration);
+      }
+
+      $log.log('meetingProtected, conf: ' + angular.toJson(conf));
+
+      return request(endpoints.meetingProtected, conf);
+    };
+
     this.createMeeting = function(configuration) {
-      return typeof configuration === 'undefined' ? request(endpoints.createMeeting) : request(endpoints.createMeeting, configuration);
+      return typeof configuration === 'undefined' ? request(endpoints.meetingProtected) : request(endpoints.meetingProtected, configuration);
     };
 
 		this.user = function(configuration) {

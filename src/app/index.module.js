@@ -4,6 +4,7 @@
 	angular
 	.module('spotkaniaSportoweSwiip',
 	[
+    'pascalprecht.translate',
 		'ngAnimate',
 		'currentUserModule',
 		'ui.router',
@@ -23,6 +24,7 @@
 		'tokenModule',
     'registerUserModule',
     'createMeetingModule',
-    'notificationPageModule'
+    'notificationPageModule',
+    'editMeetingModule'
 	]);
 })();

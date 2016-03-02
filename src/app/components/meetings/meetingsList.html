@@ -1,25 +1,37 @@
-<ul class="meetings-list">
-	<li class="meetings-list-item" ng-repeat="meeting in meetingsCtrl.meetings">
-		<div>
-			Termin: <span class="date">{{meeting.meeting_date}}</span>
-		</div>
+<div class="meetings-list">
+	<div class="meetings-list-item-wrapper" ng-repeat="meeting in meetingsCtrl.meetings" ng-class="{'end': $last}">
+    <div class="meetings-list-item">
+      <div class="meetings-list-item-datetime">
+        <div class="meetings-list-item-datetime-date">
+          <span>{{meeting.meeting_date | date : 'dd.MM'}}</span><br />
+          <span>{{meeting.meeting_date | date : 'yyyy'}}</span><br />
+        </div>
 
-		<div>
-			Spotkanie dla: <span class="gender">{{meeting.gender}}</span>
-		</div>
+        <div class="meetings-list-item-datetime-time">
+          <span>{{meeting.meeting_date | date: 'HH:mm'}}</span>
+        </div>
+      </div>
 
-		<div>
-			Poziom: <span class="level">{{meeting.level}}</span>
-		</div>
 
-		<div>
-			Ilość wolnych miejsc: <span class="free-places-counter">{{meeting.members_required - meeting.assigned_users_ids.length}}</span>
-		</div>
+  		<div class="meetings-list-item-params">
+        <div>
+          Spotkanie dla: <span class="gender">{{meeting.gender}}</span>
+        </div>
 
-		<div class="address">
-			<span class="city">{{meeting.venue}}</span>
-		</div>
+        <div class="progress success round" role="progressbar" tabindex="0" aria-valuenow="{{meeting.level}}" aria-valuemin="0" aria-valuemax="3" title="Poziom: {{meetingsCtrl.meetingsFilters.level.values[meeting.level].name}}">
+          <div class="meter level-{{meeting.level}}"></div>
+        </div>
 
-		<a href="" ui-sref="main.meeting({_id: meeting._id})">Więcej</a>
-	</li>
-</ul>
+        <div>
+          Ilość wolnych miejsc: <span class="free-places-counter">{{meeting.members_required - meeting.assigned_users_ids.length}}</span>
+        </div>
+
+        <div class="address">
+          <span class="city">{{meeting.venue | limitTo : 30}} {{meeting.venue.length}}</span>
+        </div>
+
+        <a href="" ui-sref="main.meeting({_id: meeting._id})">Więcej</a>
+  		</div>
+  	</div>
+  </div>
+</div>

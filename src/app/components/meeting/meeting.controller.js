@@ -14,25 +14,35 @@
     var inProgress = false;
 
     vm.joinMeeting = joinMeeting;
+    vm.leaveMeeting = leaveMeeting;
 		vm.meeting = {};
 		vm.meetingOwner = {};
     vm.infoBoxMessage = '';
     vm.currentUserId = null;
+    vm.isAssignBoxVisible = isAssignBoxVisible;
+    vm.isUnassignBoxVisible = isUnassignBoxVisible;
+    vm.isEditBoxVisible = isEditBoxVisible;
 
-		meeting.getData().then(function() {
-			vm.meeting = meeting.data;
-			initMeetingOwner(vm.meeting.owner_id);
-			showVenueOnMap(vm.meeting);
-		});
+    init();
 
-    logonService.isLogged().then(
-      function(results) {
-        vm.currentUserId = results;
-      },
-      function() {
-        vm.currentUserId = null;
-      }
-    );
+    function init () {
+
+      meeting.getData().then(function() {
+        vm.meeting = meeting.data;
+        initMeetingOwner(vm.meeting.owner_id);
+        showVenueOnMap(vm.meeting);
+
+        logonService.isLogged().then(
+          function(results) {
+            vm.currentUserId = results;
+          },
+          function() {
+            vm.currentUserId = null;
+          }
+        );
+      });
+    }
+
 
     /////////////////
 
@@ -85,10 +95,11 @@
         return;
       }
 
-      meeting.joinMeeting(vm.currentUserId, vm.meeting._id).then(
+      meeting.joinMeeting(vm.meeting._id).then(
         function() {
           vm.infoBoxMessage = 'Zapisałeś się na to spotkanie.';
           inProgress = false;
+          init();
         },
         function(results) {
           vm.infoBoxMessage = 'Nie można zapisać się na to spotkanie. Błąd: ' + angular.toJson(results) + '.';
@@ -96,5 +107,67 @@
         }
       );
     }
+
+    function leaveMeeting() {
+      vm.infoBoxMessage = '';
+
+      if (inProgress) {
+        $log.log('leaveMeeting in progress.');
+        vm.infoBoxMessage = 'Wypisywanie w toku.';
+        return;
+      }
+
+      inProgress = true;
+      $log.log('leaveMeeting started.');
+
+      if (!vm.meeting._id || !vm.currentUserId || vm.meeting.assigned_users_ids.indexOf(vm.currentUserId) < 0) {
+        vm.infoBoxMessage = 'Nie można wypisać się ze spotkania.';
+        inProgress = false;
+        return;
+      }
+
+      meeting.leaveMeeting(vm.currentUserId, vm.meeting._id).then(
+        function() {
+          vm.infoBoxMessage = 'Wypisałeś się ze spotkania.';
+          inProgress = false;
+          init();
+        },
+        function(results) {
+          vm.infoBoxMessage = 'Nie można wypisać się ze spotkania. Błąd: ' + angular.toJson(results) + '.';
+          inProgress = false;
+        }
+      );
+    }
+
+    function isAssignBoxVisible () {
+      if (!vm.currentUserId) {
+        return false;
+      }
+
+      if (vm.meeting.assigned_users_ids.indexOf(vm.currentUserId) < 0) {
+        if (vm.meeting.members_required > vm.meeting.assigned_users_ids.length) {
+          return true;
+        }
+      }
+
+      return false;
+    }
+
+    function isUnassignBoxVisible () {
+      if (!vm.currentUserId) {
+        return false;
+      }
+
+      if (vm.meeting.assigned_users_ids.indexOf(vm.currentUserId) >= 0) {
+          return true;
+      }
+
+      return false;
+    }
+
+    function isEditBoxVisible () {
+      return vm.currentUserId && vm.currentUserId === vm.meeting.owner_id;
+    }
+
 	}
 })();

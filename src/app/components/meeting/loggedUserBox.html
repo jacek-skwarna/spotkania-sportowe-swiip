@@ -1,2 +1,4 @@
-<div class="info-box">{{meetingCtrl.infoBoxMessage}}</div>
-<button type="button" ng-click="meetingCtrl.joinMeeting()">Zapisz się</button>
+<div class="meeting-save-box" ng-if="meetingCtrl.currentUserId">
+  <div class="info-box">{{meetingCtrl.infoBoxMessage}}</div>
+  <button type="button" ng-click="meetingCtrl.joinMeeting()">Zapisz się</button>
+</div>

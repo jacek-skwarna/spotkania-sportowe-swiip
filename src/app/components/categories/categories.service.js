@@ -1,6 +1,6 @@
 (function() {
 	'use strict';
-	
+
 	angular.module('categoriesModule')
 	.service('categories', categories);
 
@@ -20,7 +20,8 @@
 				resolve(categoriesArray);
 			} else {
 				api.categories({method: 'GET'})
-				.then(function(data) {
+				.then(
+        function(data) {
 					categoriesArray = data.results;
 					resolve(categoriesArray);
 				},

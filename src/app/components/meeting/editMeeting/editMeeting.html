@@ -1,0 +1,73 @@
+<div class="meeting-create-container">
+  <div class="meeting-create-form-wrapper">
+    <h1>Edytuj spotkanie</h1>
+
+    <div class="edit-meeting-info" ng-show="editMeetingCtrl.infoBoxMessage">
+      {{editMeetingCtrl.infoBoxMessage}}
+    </div>
+
+    <form id="meeting-edit" name="meeting-edit" method="POST" ng-submit="editMeetingCtrl.updateMeeting(editMeetingCtrl.meeting)">
+      <div class="meeting-map-wrapper">
+        <input id="venue" name="venue" type="text" class="meeting-address" placeholder="Podaj adres miejsca spotkania." ng-model="editMeetingCtrl.meeting.venue" required />
+        <button id="search-venue" type="button" ng-click="editMeetingCtrl.getCoordinates(editMeetingCtrl.meeting.venue)">Wyszukaj</button>
+
+        <div class="warning" ng-hide="!editMeetingCtrl.venueWarning">
+          <p>{{editMeetingCtrl.venueWarning}}</p>
+        </div>
+
+        <ng-map zoom="14" center="52, 19.612224"></ng-map>
+
+        {{editMeetingCtrl.meeting.venue}}<br>
+        {{editMeetingCtrl.meeting.venue_coordinates}}
+      </div>
+
+      <!-- hidden values -->
+      <select name="meetings-filters-category"
+        id="meetings-filters-category"
+        class="meetings-filters-category"
+        ng-model="editMeetingCtrl.meeting.category"
+        ng-options="category.url_suffix as category.name for category in editMeetingCtrl.categories">
+      </select>
+
+      <div class="meeting-attributes">
+          <table>
+              <tr>
+                  <td class="attribtue-name">
+                      Termin spotkania
+                  </td>
+                  <td class="attribtue-value">
+            <input id="meeting_date" name="meeting_date" type="text" placeholder="Termin spotkania" ng-model="editMeetingCtrl.meeting.meeting_date" datetime-picker />
+                  </td>
+              </tr>
+              <tr>
+                  <td class="attribtue-name">
+                      Ilość potrzebnych osób
+                  </td>
+                  <td class="attribtue-value">
+                      <input id="members_required" name="members_required" type="number" min="1" max="30" placeholder="Ilość potrzebnych osób" ng-model="editMeetingCtrl.meeting.members_required" />
+                  </td>
+              </tr>
+              <tr>
+                  <td class="attribtue-name">
+                      Płeć uczestników
+                  </td>
+                  <td class="attribtue-value">
+                      <input type="radio" name="gender" value="m" ng-model="editMeetingCtrl.meeting.gender">Mężczyzna<br>
+              <input type="radio" name="gender" value="f" ng-model="editMeetingCtrl.meeting.gender">Kobieta
+                  </td>
+              </tr>
+              <tr>
+                <td class="attribtue-name">
+                      Poziom
+                  </td>
+                <td>
+                  <input id="level" name="level" type="number" min="1" max="3" class="meeting-level" placeholder="Podaj poziom zaawansowania uczestników." ng-model="editMeetingCtrl.meeting.level" />
+                </td>
+              </tr>
+          </table>
+      </div>
+
+      <button type="submit">Zapisz</button>
+    </form>
+  </div>
+</div>

@@ -1,9 +1,18 @@
-<div class="container">
-	<div ui-view="mainNavigation"></div>
+<nav class="top-bar" data-topbar role="navigation">
+  <ul class="title-area">
+    <li class="name">
+      <h1><a ui-sref="main.home">Spotkania sportowe</a></h1>
+    </li>
+    <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
+    <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+  </ul>
 
-	<div ui-view="currentUserSection"></div>
+  <section ui-view="mainNavigation" class="top-bar-section">
+  </section>
+</nav>
 
-	<div ui-view></div>
+<div ui-view="currentUserSection" class="current-user-section"></div>
 
-	<div ui-view="footer"></div>
-</div>
+<div ui-view></div>
+
+<div ui-view="footer"></div>

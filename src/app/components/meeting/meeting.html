@@ -21,9 +21,22 @@
       {{meetingCtrl.meeting.venue_coordinates}}
     </div>
 
-    <div ui-view="loggedUserBox">
-
+    <!-- start feature buttons -->
+    <div class="meeting-assign-box" ng-if="meetingCtrl.isAssignBoxVisible()">
+      <div class="info-box">{{meetingCtrl.infoBoxMessage}}</div>
+      <button type="button" ng-click="meetingCtrl.joinMeeting()">Zapisz się</button>
     </div>
+
+    <div class="meeting-unassign-box" ng-if="meetingCtrl.isUnassignBoxVisible()">
+      <div class="info-box">{{meetingCtrl.infoBoxMessage}}</div>
+      <button type="button" ng-click="meetingCtrl.leaveMeeting()">Wypisz się</button>
+    </div>
+
+    <div class="meeting-unassign-box" ng-if="meetingCtrl.isEditBoxVisible()">
+      <div class="info-box">{{meetingCtrl.infoBoxMessage}}</div>
+      <a ui-sref="main.editMeeting({_id: meetingCtrl.meeting._id})">Edytuj</a>
+    </div>
+    <!-- end feature buttons -->
 
     <div class="meeting-attributes">
         <table>
@@ -40,7 +53,7 @@
                     Wolne miejsca
                 </td>
                 <td class="attribtue-value">
-                    {{meetingCtrl.meeting.members_required}}
+                    {{meetingCtrl.meeting.members_required - meetingCtrl.meeting.assigned_users_ids.length}}
                 </td>
             </tr>
             <tr>
