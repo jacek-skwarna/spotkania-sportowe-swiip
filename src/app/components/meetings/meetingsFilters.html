@@ -1,43 +1,62 @@
-<section class="row">
-	<div class="columns medium-4">
-		<label>
-      Wybierz kategorię
+<section>
+  <div class="row">
+  	<div class="columns medium-4">
+  		<label>
+        {{ 'MEETINGS_FILTERS.CATEGORY' | translate }}
 
-      <select name="meetings-filters-category"
-        id="meetings-filters-category"
-        class="meetings-filters-category"
-        ng-model="meetingsCtrl.categoryModel"
-        ng-options="category.name for category in meetingsCtrl.categories"
-        ng-change="meetingsCtrl.categoryUpdated()">
-      </select>
-    </label>
-	</div>
+        <select name="meetings-filters-category"
+          id="meetings-filters-category"
+          class="meetings-filters-category"
+          ng-model="meetingsCtrl.categoryModel"
+          ng-options="category.name for category in meetingsCtrl.categories"
+          ng-change="meetingsCtrl.categoryUpdated()">
+        </select>
+      </label>
+  	</div>
 
-	<div class="columns medium-4">
-		<label>
-      Spotkanie dla
+  	<div class="columns medium-4">
+  		<label>
+        {{ 'MEETINGS_FILTERS.GENDER' | translate }}
 
-      <select name="meetings-filters-gender"
-          id="meetings-filters-gender"
-          class="meetings-filters-gender"
-          ng-model="meetingsCtrl.models.gender"
-          ng-options="gender.name for gender in meetingsCtrl.meetingsFilters.gender.values"
-          ng-change="meetingsCtrl.filtersUpdated('gender')">
-      </select>
-    </label>
-	</div>
+        <select name="meetings-filters-gender"
+            id="meetings-filters-gender"
+            class="meetings-filters-gender"
+            ng-model="meetingsCtrl.models.gender"
+            ng-options="gender.name for gender in meetingsCtrl.meetingsFilters.gender.values"
+            ng-change="meetingsCtrl.filtersUpdated('gender')">
+        </select>
+      </label>
+  	</div>
 
-	<div class="columns medium-4">
-		<label>
-      Poziom
+  	<div class="columns medium-4">
+  		<label>
+        {{ 'MEETINGS_FILTERS.LEVEL' | translate }}
 
-      <select name="meetings-filters-level"
-          id="meetings-filters-level"
-          class="meetings-filters-level"
-          ng-model="meetingsCtrl.models.level"
-          ng-options="level.name for level in meetingsCtrl.meetingsFilters.level.values"
-          ng-change="meetingsCtrl.filtersUpdated('level')">
-      </select>
-    </label>
-	</div>
+        <select name="meetings-filters-level"
+            id="meetings-filters-level"
+            class="meetings-filters-level"
+            ng-model="meetingsCtrl.models.level"
+            ng-options="level.name for level in meetingsCtrl.meetingsFilters.level.values"
+            ng-change="meetingsCtrl.filtersUpdated('level')">
+        </select>
+      </label>
+  	</div>
+  </div>
+
+  <div class="row">
+    <div class="columns medium-12">
+      <label>
+        {{ 'MEETINGS_FILTERS.VENUE' | translate }}
+{{meetingsCtrl.models.venue.value}}
+        <input
+            type="text"
+            name="meetings-filters-venue"
+            id="meetings-filters-venue"
+            class="meetings-filters-venue"
+            ng-model="meetingsCtrl.models.venue"
+            ng-change="meetingsCtrl.venueUpdated(meetingsCtrl.models.venue)"
+        />
+      </label>
+    </div>
+  </div>
 </section>

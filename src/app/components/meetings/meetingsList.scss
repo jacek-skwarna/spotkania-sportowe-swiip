@@ -1,48 +1,57 @@
 .meetings-list {
-  @extend .row
-}
-
-.meetings-list-item-wrapper {
-  @extend .columns, .medium-6;
-}
-
-.meetings-list-item {
   @extend .row;
 
-  height: 7em;
-  margin-bottom: 2em;
-  overflow: hidden;
-
-  .meetings-list-item-datetime {
-    @extend .columns, .medium-3, .text-center;
-
-    line-height: 1.4;
-
-    .meetings-list-item-datetime-date {
-      background-color: red;
-      font-weight: bold;
-    }
-
-    .meetings-list-item-datetime-time {
-      background-color: green;
-    }
+  .meetings-list-item-wrapper {
+    @extend .columns, .medium-6;
   }
 
-  .meetings-list-item-params {
-    @extend .columns, .medium-9;
-  }
+  .meetings-list-item {
+    @extend .row;
 
-  .progress {
-    .level-1 {
-      width: 33.333%;
+    @media #{$medium-only} {
+      height: 8em;
     }
 
-    .level-2 {
-      width: 66.666%;
+    margin-bottom: 2em;
+    overflow: hidden;
+
+    .meetings-list-item-datetime {
+      @extend .columns, .small-6, .medium-3, .text-center;
+
+      line-height: 1.4;
+
+      .meetings-list-item-datetime-date {
+        background-color: red;
+        font-weight: bold;
+      }
+
+      .meetings-list-item-datetime-time {
+        background-color: green;
+      }
     }
 
-    .level-3 {
-      width: 100%;
+    .meetings-list-item-gender {
+      @extend .columns, .small-6, .medium-1, .text-center;
+
+      font-size: 3em;
+    }
+
+    .meetings-list-item-params {
+      @extend .columns, .small-12, .medium-8;
+    }
+
+    .progress {
+      .level-1 {
+        width: 33.333%;
+      }
+
+      .level-2 {
+        width: 66.666%;
+      }
+
+      .level-3 {
+        width: 100%;
+      }
     }
   }
 }

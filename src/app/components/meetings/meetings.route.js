@@ -13,7 +13,7 @@
 			templateUrl: 'app/components/meetings/meetingsCategoriesList.html'
 		})
 		.state('main.meetingsInCategorySearch', {
-			url: 'meetings/:category/:offset/:limit?gender&level',
+			url: 'meetings/:category/:offset/:limit?gender&level&venue',
 			templateUrl: 'app/components/meetings/meetingsInCategorySearch.html',
 			controller: 'MeetingsController',
 			controllerAs: 'meetingsCtrl',

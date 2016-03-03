@@ -4,7 +4,7 @@
 	angular
 	.module('spotkaniaSportoweSwiip',
 	[
-    'pascalprecht.translate',
+    'translate',
 		'ngAnimate',
 		'currentUserModule',
 		'ui.router',

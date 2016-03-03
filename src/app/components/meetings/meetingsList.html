@@ -12,12 +12,11 @@
         </div>
       </div>
 
+      <div class="meetings-list-item-gender" title="{{'MEETING_FOR.' + meeting.gender | translate}}">
+        <span class="{{'GENDER_CLASS.' + meeting.gender | translate}}"></span>
+      </div>
 
   		<div class="meetings-list-item-params">
-        <div>
-          Spotkanie dla: <span class="gender">{{meeting.gender}}</span>
-        </div>
-
         <div class="progress success round" role="progressbar" tabindex="0" aria-valuenow="{{meeting.level}}" aria-valuemin="0" aria-valuemax="3" title="Poziom: {{meetingsCtrl.meetingsFilters.level.values[meeting.level].name}}">
           <div class="meter level-{{meeting.level}}"></div>
         </div>
