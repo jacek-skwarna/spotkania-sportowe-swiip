@@ -1,0 +1,54 @@
+.my-account-container {
+  .my-account-sub-header-h3 {
+    @extend label;
+  }
+
+  .my-account-user-details-info {
+    margin-bottom: 2em;
+  }
+
+  .meetings-list-item-container {
+    border: 1px solid #ccc;
+    margin: 1em 2em;
+  }
+
+  .meetings-list-item {
+    @media #{$medium-only} {
+      height: 8em;
+    }
+
+    margin-bottom: 2em;
+    overflow: hidden;
+
+    .meetings-list-item-datetime {
+      line-height: 1.4;
+
+      .meetings-list-item-datetime-date {
+        background-color: red;
+        font-weight: bold;
+      }
+
+      .meetings-list-item-datetime-time {
+        background-color: green;
+      }
+    }
+
+    .meetings-list-item-gender {
+      font-size: 3em;
+    }
+
+    .progress {
+      .level-1 {
+        width: 33.333%;
+      }
+
+      .level-2 {
+        width: 66.666%;
+      }
+
+      .level-3 {
+        width: 100%;
+      }
+    }
+  }
+}

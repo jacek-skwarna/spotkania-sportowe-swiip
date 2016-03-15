@@ -1,0 +1,134 @@
+<div class="my-account-container">
+  <div class="my-account-main-header-container row">
+    <h1 class="my-account-main-header columns">
+      {{ 'MY_ACCOUNT.MAIN_HEADER' | translate }}
+    </h1>
+  </div>
+
+  <div class="my-account-user-details-container row">
+    <h2 class="my-account-sub-header columns">
+      {{ 'MY_ACCOUNT.SECTIONS.USER_DETAILS.HEADER' | translate }}
+    </h2>
+
+    <div class="my-account-user-details-info columns {{ myAccountCtrl.userDetails.info.status}}" ng-show="myAccountCtrl.userDetails.info.message">
+      {{ myAccountCtrl.userDetails.info.message }}
+    </div>
+
+    <div class="my-account-user-details columns">
+      <form id="user-details-form" name="contact-form" method="POST" ng-submit="myAccountCtrl.updateUser()">
+        <label>
+          {{ 'MY_ACCOUNT.SECTIONS.USER_DETAILS.FIELDS.NICK.LABEL' | translate }}
+          <input id="nick" name="nick" type="text" ng-model="myAccountCtrl.currentUser.data.nick" required />
+        </label>
+
+        <label>
+          {{ 'MY_ACCOUNT.SECTIONS.USER_DETAILS.FIELDS.EMAIL.LABEL' | translate }}
+          <input id="email" name="email" type="email" ng-model="myAccountCtrl.currentUser.data.email" required />
+        </label>
+
+        <label>
+          {{ 'MY_ACCOUNT.SECTIONS.USER_DETAILS.FIELDS.PHONE.LABEL' | translate }}
+          <input id="phone" name="phone" type="text" ng-model="myAccountCtrl.currentUser.data.phone" required />
+        </label>
+
+        <div class="user-details-gender">
+          <h3 class="my-account-sub-header-h3">{{ 'MY_ACCOUNT.SECTIONS.USER_DETAILS.FIELDS.GENDER.LABEL' | translate }}</h3>
+          <label>
+            <input type="radio" name="gender" value="f" ng-model="myAccountCtrl.currentUser.data.gender" required="required" /> {{ 'MY_ACCOUNT.SECTIONS.USER_DETAILS.FIELDS.GENDER_FEMALE.LABEL' | translate }}
+          </label>
+          <label>
+            <input type="radio" name="gender" value="m" ng-model="myAccountCtrl.currentUser.data.gender" required="required" /> {{ 'MY_ACCOUNT.SECTIONS.USER_DETAILS.FIELDS.GENDER_MALE.LABEL' | translate }}
+          </label>
+        </div>
+
+        <button type="submit">{{ 'MY_ACCOUNT.SECTIONS.USER_DETAILS.SUBMIT' | translate }}</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="my-account-organized-meetings-container row" ng-show="myAccountCtrl.organizedMeetings.length">
+    <h2 class="my-account-sub-header columns">
+      {{ 'MY_ACCOUNT.SECTIONS.ORGANIZED_MEETINGS.HEADER' | translate }}
+    </h2>
+
+    <div class="meetings-list-item-wrapper columns medium-6" ng-repeat="meeting in myAccountCtrl.organizedMeetings" ng-class="{'end': $last}">
+      <div class="meetings-list-item-container">
+        <div class="meetings-list-item row">
+          <div class="meetings-list-item-datetime columns small-6 medium-2 text-center">
+            <div class="meetings-list-item-datetime-date">
+              <span>{{meeting.data.meeting_date | date : 'dd.MM'}}</span><br />
+              <span>{{meeting.data.meeting_date | date : 'yyyy'}}</span><br />
+            </div>
+
+            <div class="meetings-list-item-datetime-time">
+              <span>{{meeting.data.meeting_date | date: 'HH:mm'}}</span>
+            </div>
+          </div>
+
+          <div class="meetings-list-item-gender columns small-6 medium-2 text-center" title="{{'MEETING_FOR.' + meeting.data.gender | translate}}">
+            <span class="{{'GENDER_CLASS.' + meeting.data.gender | translate}}"></span>
+          </div>
+
+          <div class="meetings-list-item-params columns small-12 medium-8">
+            <div class="progress round" role="progressbar" tabindex="0" aria-valuenow="{{meeting.data.level}}" aria-valuemin="0" aria-valuemax="3" title="Poziom: {{meetingsCtrl.meetingsFilters.level.values[meeting.data.level].name}}">
+              <div class="meter success level-{{meeting.data.level}}"></div>
+            </div>
+
+            <div>
+              Ilość wolnych miejsc: <span class="free-places-counter">{{meeting.data.members_required - meeting.data.assigned_users_ids.length}}</span>
+            </div>
+
+            <div class="address">
+              <span class="city">{{meeting.data.venue | limitTo : 30}} {{meeting.data.venue.length}}</span>
+            </div>
+
+            <a ui-sref="main.meeting({_id: meeting._id})">Więcej</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="my-account-assigned-meetings-container row" ng-show="myAccountCtrl.assignedMeetings.length">
+    <h2 class="my-account-sub-header columns">
+      {{ 'MY_ACCOUNT.SECTIONS.ASSIGNED_MEETINGS.HEADER' | translate }}
+    </h2>
+
+    <div class="meetings-list-item-wrapper columns medium-6" ng-repeat="meeting in myAccountCtrl.assignedMeetings" ng-class="{'end': $last}">
+      <div class="meetings-list-item-container">
+        <div class="meetings-list-item row">
+          <div class="meetings-list-item-datetime columns small-6 medium-2 text-center">
+            <div class="meetings-list-item-datetime-date">
+              <span>{{meeting.data.meeting_date | date : 'dd.MM'}}</span><br />
+              <span>{{meeting.data.meeting_date | date : 'yyyy'}}</span><br />
+            </div>
+
+            <div class="meetings-list-item-datetime-time">
+              <span>{{meeting.data.meeting_date | date: 'HH:mm'}}</span>
+            </div>
+          </div>
+
+          <div class="meetings-list-item-gender columns small-6 medium-2 text-center" title="{{'MEETING_FOR.' + meeting.data.gender | translate}}">
+            <span class="{{'GENDER_CLASS.' + meeting.data.gender | translate}}"></span>
+          </div>
+
+          <div class="meetings-list-item-params columns small-12 medium-8">
+            <div class="progress round" role="progressbar" tabindex="0" aria-valuenow="{{meeting.data.level}}" aria-valuemin="0" aria-valuemax="3" title="Poziom: {{meeting.data.level}}">
+              <div class="meter success level-{{meeting.data.level}}"></div>
+            </div>
+
+            <div>
+              Ilość wolnych miejsc: <span class="free-places-counter">{{meeting.data.members_required - meeting.data.assigned_users_ids.length}}</span>
+            </div>
+
+            <div class="address">
+              <span class="city">{{meeting.data.venue | limitTo : 30}} {{meeting.data.venue.length}}</span>
+            </div>
+
+            <a ui-sref="main.meeting({_id: meeting._id})">Więcej</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
