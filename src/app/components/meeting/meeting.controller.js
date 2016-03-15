@@ -17,7 +17,11 @@
     vm.leaveMeeting = leaveMeeting;
 		vm.meeting = {};
 		vm.meetingOwner = {};
-    vm.infoBoxMessage = '';
+    vm.infoBoxMessage = {
+      status: '',
+      message: ''
+    };
+
     vm.currentUserId = null;
     vm.isAssignBoxVisible = isAssignBoxVisible;
     vm.isUnassignBoxVisible = isUnassignBoxVisible;
@@ -77,12 +81,18 @@
 			});
 		}
 
+    function clearInfoBoxMessage() {
+      vm.infoBoxMessage.status = '';
+      vm.infoBoxMessage.message = '';
+    }
+
     function joinMeeting() {
-      vm.infoBoxMessage = '';
+      clearInfoBoxMessage();
 
       if (inProgress) {
         $log.log('joinMeeting in progress.');
-        vm.infoBoxMessage = 'Zapisywanie w toku.';
+        vm.infoBoxMessage.message = 'Zapisywanie w toku.';
+        vm.infoBoxMessage.status = 'success';
         return;
       }
 
@@ -90,30 +100,34 @@
       $log.log('joinMeeting started.');
 
       if (!vm.meeting._id || !vm.currentUserId) {
-        vm.infoBoxMessage = 'Nie można zapisać się na to spotkanie. Spróbuj za chwilę.';
+        vm.infoBoxMessage.message = 'Nie można zapisać się na to spotkanie. Spróbuj za chwilę.';
+        vm.infoBoxMessage.status = 'alert';
         inProgress = false;
         return;
       }
 
       meeting.joinMeeting(vm.meeting._id).then(
         function() {
-          vm.infoBoxMessage = 'Zapisałeś się na to spotkanie.';
+          vm.infoBoxMessage.message = 'Zapisałeś się na to spotkanie.';
+          vm.infoBoxMessage.status = 'success';
           inProgress = false;
           init();
         },
         function(results) {
-          vm.infoBoxMessage = 'Nie można zapisać się na to spotkanie. Błąd: ' + angular.toJson(results) + '.';
+          vm.infoBoxMessage.message = 'Nie można zapisać się na to spotkanie. Błąd: ' + angular.toJson(results) + '.';
+          vm.infoBoxMessage.status = 'alert';
           inProgress = false;
         }
       );
     }
 
     function leaveMeeting() {
-      vm.infoBoxMessage = '';
+      clearInfoBoxMessage();
 
       if (inProgress) {
         $log.log('leaveMeeting in progress.');
         vm.infoBoxMessage = 'Wypisywanie w toku.';
+        vm.infoBoxMessage.status = 'success';
         return;
       }
 
@@ -121,26 +135,29 @@
       $log.log('leaveMeeting started.');
 
       if (!vm.meeting._id || !vm.currentUserId || vm.meeting.assigned_users_ids.indexOf(vm.currentUserId) < 0) {
-        vm.infoBoxMessage = 'Nie można wypisać się ze spotkania.';
+        vm.infoBoxMessage.message = 'Nie można wypisać się ze spotkania.';
+        vm.infoBoxMessage.status = 'alert';
         inProgress = false;
         return;
       }
 
-      meeting.leaveMeeting(vm.currentUserId, vm.meeting._id).then(
+      meeting.leaveMeeting(vm.meeting._id).then(
         function() {
-          vm.infoBoxMessage = 'Wypisałeś się ze spotkania.';
+          vm.infoBoxMessage.message = 'Wypisałeś się ze spotkania.';
+          vm.infoBoxMessage.status = 'success';
           inProgress = false;
           init();
         },
         function(results) {
-          vm.infoBoxMessage = 'Nie można wypisać się ze spotkania. Błąd: ' + angular.toJson(results) + '.';
+          vm.infoBoxMessage.message = 'Nie można wypisać się ze spotkania. Błąd: ' + angular.toJson(results) + '.';
+          vm.infoBoxMessage.status = 'alert';
           inProgress = false;
         }
       );
     }
 
     function isAssignBoxVisible () {
-      if (!vm.currentUserId) {
+      if (!vm.currentUserId || isEditBoxVisible()) {
         return false;
       }
 

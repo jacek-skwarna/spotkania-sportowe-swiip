@@ -37,6 +37,36 @@ $topbar-bg-color: #5AADBB;
   }
 }
 
+// common styles
+.success {
+  background-color: $success-color;
+}
+
+.alert {
+  background-color: $alert-color;
+}
+
+.ng-invalid:not(.ng-pristine), .form-submitted .ng-invalid {
+  border-color: #f00;
+}
+
+.progress {
+  //background-color: $success-color;
+
+  .level-1, .meter.level-1 {
+    width: 33.333%;
+  }
+
+  .level-2 {
+    width: 66.666%;
+  }
+
+  .level-3 {
+    width: 100%;
+  }
+}
+//
+
 /**
  *  Do not remove the comments below. It's the markers used by gulp-inject to inject
  *  all your sass files automatically

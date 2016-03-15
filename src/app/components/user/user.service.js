@@ -14,6 +14,7 @@
 		};
 
 		User.prototype.getData = getData;
+    User.prototype.saveData = saveData;
 
 		return User;
 		////////////////////
@@ -33,5 +34,15 @@
 				}
 			);
 		}
+
+    function saveData() {
+      var user = this;
+
+      user.loading = true;
+
+      $log.log("saveData: " + angular.toJson(angular.extend({_id: user._id}, user.data)));
+
+      return api.updateUser(angular.extend({_id: user._id}, user.data));
+    }
 	}
 })();

@@ -12,7 +12,19 @@
       url: 'edit/meeting/:_id',
       templateUrl: 'app/components/meeting/editMeeting/editMeeting.html',
       controller: 'EditMeetingController',
-      controllerAs: 'editMeetingCtrl'
+      controllerAs: 'editMeetingCtrl',
+      resolve: {
+        isLoggedIn: function(logonService, $state) {
+          logonService.isLogged().then(
+            function(results) {
+              return results;
+            },
+            function() {
+              $state.go('main.notificationPage.editMeetingAnonymous');
+            }
+          );
+        }
+      }
     });
   }
 })();

@@ -1,0 +1,7 @@
+.contact-container {
+    @extend .row;
+
+    .contact {
+      @extend .columns, .medium-6, .medium-centered;
+    }
+}

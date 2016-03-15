@@ -1,0 +1,57 @@
+.meeting-details {
+  .meeting-menu-container,
+  .meeting-map-container,
+  .meeting-attributes-container {
+    @extend .row;
+  }
+
+  .meeting-menu-container .meeting-menu,
+  .meeting-map-container .meeting-map,
+  .feature-buttons-container .meeting-assign-box,
+  .feature-buttons-container .meeting-unassign-box,
+  .feature-buttons-container .meeting-unassign-box,
+  .meeting-attributes-container .meeting-attributes {
+    @extend .columns;
+    margin-bottom: 2em;
+  }
+
+  .meeting-attributes-container  {
+    .meeting-attributes {
+      @extend .medium-6;
+
+      table {
+        width: 100%;
+      }
+
+      .progress {
+        .level-1 {
+          width: 33.333%;
+        }
+
+        .level-2 {
+          width: 66.666%;
+        }
+
+        .level-3 {
+          width: 100%;
+        }
+      }
+    }
+
+    .meeting-notice-container {
+      margin-bottom: 2em;
+
+      .meeting-notice {
+        padding: 1em;
+      }
+    }
+
+    .feature-buttons {
+      @extend .columns, .medium-6;
+
+      .meeting-edit-button {
+        @extend .button;
+      }
+    }
+  }
+}

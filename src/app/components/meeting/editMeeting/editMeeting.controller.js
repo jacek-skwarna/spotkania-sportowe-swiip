@@ -10,12 +10,13 @@
 		var vm = this;
 		var _id = $stateParams._id || null;
 		var meeting = new Meeting(_id);
-    var inProgress = false;
     var marker = new $window.google.maps.Marker();
-    var meetingKeys = [];
 
 		vm.meeting = {};
-    vm.infoBoxMessage = '';
+    vm.infoBoxMessage = {
+      message: '',
+      status: ''
+    };
     vm.currentUserId = null;
     vm.categories = [];
     vm.getCoordinates = getCoordinates;
@@ -29,8 +30,9 @@
 
 		meeting.getData().then(function() {
 			vm.meeting = meeting.data;
-      meetingKeys = Object.keys(meeting.data);
 			showVenueOnMap(vm.meeting);
+
+      // format meeting.date
 
       logonService.isLogged().then(
         function(results) {
@@ -113,22 +115,15 @@
 
     function updateMeeting(meetingObject) {
       meeting.updateMeeting(meetingObject).then(
-        function(results) {
-          //vm.meeting = results;
-          vm.infoBoxMessage = 'Zmiany zostały zapisane.';
+        function() {
+          vm.infoBoxMessage.message = 'Zmiany zostały zapisane.';
+          vm.infoBoxMessage.status = 'success';
         },
         function(err) {
-          vm.infoBoxMessage = 'Zmiany nie zostały zapisane. Błąd: ' + err;
+          vm.infoBoxMessage.message = 'Zmiany nie zostały zapisane. Błąd: ' + err;
+          vm.infoBoxMessage.status = 'alert';
         }
       );
-    }
-
-    function refresh() {
-      $state.transitionTo($state.current, $stateParams, {
-        reload: true,
-        inherit: false,
-        notify: true
-      });
     }
 	}
 })();

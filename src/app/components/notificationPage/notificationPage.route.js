@@ -18,6 +18,10 @@
     .state('main.notificationPage.createMeetingAnonymous', {
       url: '/create-meeting-anonymous',
       templateUrl: 'app/components/notificationPage/subpages/createMeetingAnonymous.html'
+    })
+    .state('main.notificationPage.editMeetingAnonymous', {
+      url: '/edit-meeting-anonymous',
+      templateUrl: 'app/components/notificationPage/subpages/editMeetingAnonymous.html'
     });
   }
 })();

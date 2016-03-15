@@ -1,14 +1,42 @@
-<form id="register-user-form" name="register-user-form" ng-submit="registerUserCtrl.register()">
-  <input id="email" name="email" type="text" class="form-control" placeholder="Email" required autofocus ng-model="registerUserCtrl.userData.email">
-  <input id="password" name="password" type="password" class="form-control" placeholder="Hasło" required ng-model="registerUserCtrl.userData.password">
-  <input id="nick" name="nick" type="text" class="form-control" placeholder="Nick" required ng-model="registerUserCtrl.userData.nick">
-  <input id="phone" name="phone" type="text" class="form-control" placeholder="Numer telefonu" required ng-model="registerUserCtrl.userData.phone">
-  <input type="radio" name="gender" value="m" checked required ng-model="registerUserCtrl.userData.gender">Mężczyzna<br>
-  <input type="radio" name="gender" value="f" required ng-model="registerUserCtrl.userData.gender">Kobieta
+<div class="register-user-section">
+  <div class="register-user-form-wrapper row">
+    <form id="register-user-form" class="register-user-form columns medium-6 medium-centered" ng-class="{ 'form-submitted': registerUserCtrl.formSubmitted }" name="register-user-form" ng-submit="registerUserCtrl.register()">
+      <label>
+        * {{ 'REGISTER_USER.LABELS.EMAIL' | translate }}
+        <input id="email" name="email" type="email" class="form-control" required autofocus ng-model="registerUserCtrl.userData.email" />
+      </label>
 
-  <button class="btn btn-lg btn-primary btn-block" type="submit">Wyślij</button>
-</form>
+      <label>
+        * {{ 'REGISTER_USER.LABELS.PASSWORD' | translate }}
+        <input id="password" name="password" type="password" class="form-control" required ng-model="registerUserCtrl.userData.password" />
+      </label>
 
-<div class="user-registration-info" ng-show="registerUserCtrl.registerInfo">
-  {{registerUserCtrl.registerInfo}}
+      <label>
+        * {{ 'REGISTER_USER.LABELS.NICK' | translate }}
+        <input id="nick" name="nick" type="text" class="form-control" required ng-model="registerUserCtrl.userData.nick" />
+      </label>
+
+      <label>
+        * {{ 'REGISTER_USER.LABELS.PHONE' | translate }}
+        <input id="phone" name="phone" type="text" class="form-control" required ng-model="registerUserCtrl.userData.phone" />
+      </label>
+
+      * {{ 'REGISTER_USER.LABELS.GENDER' | translate }}
+      <label>
+        <input type="radio" name="gender" value="m" required ng-model="registerUserCtrl.userData.gender" /> Mężczyzna<br />
+      </label>
+
+      <label>
+        <input type="radio" name="gender" value="f" required ng-model="registerUserCtrl.userData.gender" /> Kobieta
+      </label>
+
+      <button class="btn btn-lg btn-primary btn-block" type="submit" ng-click="registerUserCtrl.formSubmitted = true;">{{ 'REGISTER_USER.BUTTONS.SUBMIT' | translate }}</button>
+    </form>
+  </div>
+
+  <div class="register-user-info-wrapper row" ng-show="registerUserCtrl.registerInfo.message">
+    <div class="register-user-info {{registerUserCtrl.registerInfo.status}} columns medium-6 medium-centered">
+      <p>{{registerUserCtrl.registerInfo.message}}</p>
+    </div>
+  </div>
 </div>

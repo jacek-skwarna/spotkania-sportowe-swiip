@@ -1,6 +1,6 @@
 <div class="row">
 	<section class="columns">
-		<h5>Co Cię interesuje?</h5>
+		<h5>{{ 'MEETINGS_IN_CATEGORY_SEARCH.HEADER_FILTERS' | translate }}</h5>
 
 		<div ui-view="filters"></div>
 	</section>
@@ -8,7 +8,7 @@
 	<section ui-view="details" class="columns"></section>
 
 	<section class="columns">
-		<h4>Lista spotkań</h4>
+		<h4>{{ 'MEETINGS_IN_CATEGORY_SEARCH.HEADER_RESULTS' | translate }}</h4>
 
 		<div ui-view="list"></div>
 	</section>

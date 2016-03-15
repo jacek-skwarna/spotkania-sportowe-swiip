@@ -1,0 +1,25 @@
+<div class="contact-container">
+  <div class="contact">
+    <h1>{{ 'CONTACT.MAIN_HEADER' | translate }}</h1>
+
+    <div class="contact-notice-container" ng-show="contactCtrl.contactInfo.message">
+      <div class="contact-notice {{contactCtrl.contactInfo.status}}">
+        {{ contactCtrl.contactInfo.message }}
+      </div>
+    </div>
+
+    <form id="contact-form" name="contact-form" method="POST" ng-submit="contactCtrl.submitForm()">
+      <label>
+        {{ 'CONTACT.FIELDS.NAME.LABEL' | translate }}
+        <input id="name" name="name" type="text" class="contact-name" ng-model="contactCtrl.currentUser.data.nick" required />
+      </label>
+
+      <label>
+        {{ 'CONTACT.FIELDS.MESSAGE.LABEL' | translate }}
+        <textarea id="message" name="message" class="contact-message" ng-model="contactCtrl.message" required></textarea>
+      </label>
+
+      <button type="submit">{{ 'CONTACT.SUBMIT' | translate }}</button>
+    </form>
+  </div>
+</div>

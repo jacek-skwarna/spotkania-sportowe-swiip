@@ -1,0 +1,44 @@
+.meeting-edit {
+  .meeting-edit-header-container .meeting-edit-header,
+  .meeting-map-container .meeting-map,
+  .meeting-attributes-container .meeting-attributes {
+    margin-bottom: 2em;
+  }
+
+  .meeting-edit-header-container .meeting-edit-header {
+    h1 {
+      @extend h4;
+    }
+  }
+
+  .meeting-attributes-container  {
+    .meeting-attributes {
+      table {
+        width: 100%;
+      }
+
+      .progress {
+        .level-1 {
+          width: 33.333%;
+        }
+
+        .level-2 {
+          width: 66.666%;
+        }
+
+        .level-3 {
+          width: 100%;
+        }
+      }
+    }
+
+    .meeting-notice-container {
+      margin-bottom: 2em;
+
+      .meeting-notice {
+        padding: 1em;
+      }
+    }
+  }
+}
+

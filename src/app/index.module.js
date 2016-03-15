@@ -25,6 +25,8 @@
     'registerUserModule',
     'createMeetingModule',
     'notificationPageModule',
-    'editMeetingModule'
+    'editMeetingModule',
+    'contactModule',
+    'myAccountModule'
 	]);
 })();

@@ -64,10 +64,16 @@
 	vm.categoryModel = {};
 	vm.categories = [];
 
-	vm.defaultLimit = 20;
 	vm.meetings = [];
+  vm.countAll = 0;//number of all meetings that match selected filters, this value should be returned together with the meetings array
+  vm.countPages = 0;//number of pages computed using $stateParams.limit and vm.countAll
+  vm.pagination = [];
+  vm.currentOffset = parseInt($stateParams.offset);
 
   vm.venueUpdated = venueUpdated;
+  vm.categoryUpdated = categoryUpdated;
+  vm.showMeetingDetail = showMeetingDetail;
+  vm.filtersUpdated = filtersUpdated;
 
 	setModelsByQueryParameters();
 
@@ -113,7 +119,7 @@
         });
       }
 
-      if (keys[i] === 'venue' && typeof $stateParams[keys[i]] === 'string') {
+      if (keys[i] === 'venue' && angular.isString($stateParams[keys[i]])) {
         vm.models[keys[i]] = $stateParams[keys[i]].length >= 1 ? $stateParams[keys[i]] : '';
         if ($stateParams[keys[i]].length < 3) {
           $state.go("main.meetingsInCategorySearch.list", {venue: ''});
@@ -146,15 +152,26 @@
 		return api.meetings(configuration)
 		.then(function(data) {
 			vm.meetings = data.results;
+      vm.countAll = data.count_all;
+      if (!$stateParams.limit || !vm.countAll) {
+        return;
+      }
+      vm.countPages = Math.ceil(vm.countAll/$stateParams.limit);
+      for (var i = 0; i < vm.countPages; i++) {
+        vm.pagination.push({
+          offset: i * $stateParams.limit,
+          number: i + 1
+        });
+      }
 		});
 	}
 
-	vm.filtersUpdated = function(filterName) {
+	function filtersUpdated(filterName) {
 		var filter = {};
 		filter[filterName] = vm.models[filterName].value;
     $log.log('filtersUpdated, filter: ' + angular.toJson(filter));
 		$state.go("main.meetingsInCategorySearch.list", filter);
-	};
+	}
 
   /**
   * @description
@@ -199,12 +216,12 @@
     }, 1500);
   }
 
-	vm.categoryUpdated = function() {
+  function categoryUpdated() {
 		$state.go("main.meetingsInCategorySearch.list", {category: vm.categoryModel.url_suffix});
-	};
+	}
 
-	vm.showMeetingDetail = function(meetingId) {
+	function showMeetingDetail(meetingId) {
 		$state.go("main.meetingsInCategorySearch.meetingDetail", {meetingid: meetingId});
-	};
+	}
 	}
 })();

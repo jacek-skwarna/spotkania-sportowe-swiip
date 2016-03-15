@@ -5,6 +5,12 @@
     @extend .columns, .medium-6;
   }
 
+  .meetings-list-item-container {
+    @extend .columns;
+    border: 1px solid #ccc;
+    margin-bottom: 2em;
+  }
+
   .meetings-list-item {
     @extend .row;
 
@@ -16,7 +22,7 @@
     overflow: hidden;
 
     .meetings-list-item-datetime {
-      @extend .columns, .small-6, .medium-3, .text-center;
+      @extend .columns, .small-6, .medium-2, .text-center;
 
       line-height: 1.4;
 
@@ -31,7 +37,7 @@
     }
 
     .meetings-list-item-gender {
-      @extend .columns, .small-6, .medium-1, .text-center;
+      @extend .columns, .small-6, .medium-2, .text-center;
 
       font-size: 3em;
     }
@@ -53,5 +59,15 @@
         width: 100%;
       }
     }
+  }
+}
+
+.meetings-list-pagination {
+  @extend .row, .text-center;
+
+  margin-top: 2em;
+
+  ul.pagination {
+    display: inline-block;
   }
 }

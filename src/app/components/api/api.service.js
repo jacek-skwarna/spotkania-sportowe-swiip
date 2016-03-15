@@ -13,10 +13,12 @@
       createMeeting: 'protected/meeting/create',
       updateMeeting: 'protected/meeting/:meetingId',
       joinMeeting: 'protected/meeting/:meetingId/join',
+      leaveMeeting: 'protected/meeting/:meetingId/leave',
       meetingProtected: 'protected/meeting',
 			meeting: 'meeting',
 			meetings: 'meetings',
 			user: 'user',
+      userProtected: 'protected/user/:userId',
 			authenticate: 'user/authenticate',
 			authenticateByToken: 'protected/user/authenticatebytoken',
 			currentuser: 'protected/user',
@@ -35,7 +37,9 @@
 			$log.log('config: ' + angular.toJson(config, true));
 
 			return $http(config).then(function (response) {
-				if (response.data.err) {
+        $log.log('response: ' + angular.toJson(response));
+
+				if (response.data.err || response.err) {
 					$log.error('Error: ' + angular.toJson(response.data.err, true));
 					return $q.reject(response.data.err);
 				} else {
@@ -96,6 +100,24 @@
       return request(endpoint, conf);
     };
 
+    this.leaveMeeting = function(configuration) {
+      var conf = {
+        method: 'PUT',
+        headers: { 'x-access-token': tokenService.get() }
+      };
+      var endpoint = endpoints.leaveMeeting;
+
+      if (typeof configuration !== 'undefined' && typeof configuration._id !== 'undefined') {
+        endpoint = endpoint.replace(':meetingId', configuration._id);
+        delete configuration._id;
+        angular.extend(conf, { data: configuration });
+      }
+
+      $log.log('api.leaveMeeting, conf: ' + angular.toJson(conf));
+
+      return request(endpoint, conf);
+    };
+
     this.meetingProtected = function(configuration) {
       var conf = {};
 
@@ -147,5 +169,24 @@
 				return false;
 			}
 		};
+
+    this.updateUser = function(configuration) {
+      $log.log("updateUser: " + angular.toJson(configuration));
+      var conf = {
+        method: 'PUT',
+        headers: { 'x-access-token': tokenService.get() }
+      };
+      var endpoint = endpoints.userProtected;
+
+      if (typeof configuration !== 'undefined' && typeof configuration._id !== 'undefined') {
+        endpoint = endpoint.replace(':userId', configuration._id);
+        delete configuration._id;
+        angular.extend(conf, { data: configuration });
+      }
+
+      $log.log('api.updateUser, conf: ' + angular.toJson(conf));
+
+      return request(endpoint, conf);
+    };
 	}
 })();

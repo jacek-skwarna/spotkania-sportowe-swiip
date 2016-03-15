@@ -1,36 +1,48 @@
-<div class="meetings-list">
-	<div class="meetings-list-item-wrapper" ng-repeat="meeting in meetingsCtrl.meetings" ng-class="{'end': $last}">
-    <div class="meetings-list-item">
-      <div class="meetings-list-item-datetime">
-        <div class="meetings-list-item-datetime-date">
-          <span>{{meeting.meeting_date | date : 'dd.MM'}}</span><br />
-          <span>{{meeting.meeting_date | date : 'yyyy'}}</span><br />
-        </div>
+<div class="clearfix">
+  <div class="meetings-list">
+  	<div class="meetings-list-item-wrapper" ng-repeat="meeting in meetingsCtrl.meetings" ng-class="{'end': $last}">
+      <div class="meetings-list-item-container">
+        <div class="meetings-list-item">
+          <div class="meetings-list-item-datetime">
+            <div class="meetings-list-item-datetime-date">
+              <span>{{meeting.meeting_date | date : 'dd.MM'}}</span><br />
+              <span>{{meeting.meeting_date | date : 'yyyy'}}</span><br />
+            </div>
 
-        <div class="meetings-list-item-datetime-time">
-          <span>{{meeting.meeting_date | date: 'HH:mm'}}</span>
-        </div>
+            <div class="meetings-list-item-datetime-time">
+              <span>{{meeting.meeting_date | date: 'HH:mm'}}</span>
+            </div>
+          </div>
+
+          <div class="meetings-list-item-gender" title="{{'MEETING_FOR.' + meeting.gender | translate}}">
+            <span class="{{'GENDER_CLASS.' + meeting.gender | translate}}"></span>
+          </div>
+
+      		<div class="meetings-list-item-params">
+            <div class="progress round" role="progressbar" tabindex="0" aria-valuenow="{{meeting.level}}" aria-valuemin="0" aria-valuemax="3" title="Poziom: {{meetingsCtrl.meetingsFilters.level.values[meeting.level].name}}">
+              <div class="meter success level-{{meeting.level}}"></div>
+            </div>
+
+            <div>
+              Ilość wolnych miejsc: <span class="free-places-counter">{{meeting.members_required - meeting.assigned_users_ids.length}}</span>
+            </div>
+
+            <div class="address">
+              <span class="city">{{meeting.venue | limitTo : 30}} {{meeting.venue.length}}</span>
+            </div>
+
+            <a href="" ui-sref="main.meeting({_id: meeting._id})">Więcej</a>
+      		</div>
+      	</div>
       </div>
-
-      <div class="meetings-list-item-gender" title="{{'MEETING_FOR.' + meeting.gender | translate}}">
-        <span class="{{'GENDER_CLASS.' + meeting.gender | translate}}"></span>
-      </div>
-
-  		<div class="meetings-list-item-params">
-        <div class="progress success round" role="progressbar" tabindex="0" aria-valuenow="{{meeting.level}}" aria-valuemin="0" aria-valuemax="3" title="Poziom: {{meetingsCtrl.meetingsFilters.level.values[meeting.level].name}}">
-          <div class="meter level-{{meeting.level}}"></div>
-        </div>
-
-        <div>
-          Ilość wolnych miejsc: <span class="free-places-counter">{{meeting.members_required - meeting.assigned_users_ids.length}}</span>
-        </div>
-
-        <div class="address">
-          <span class="city">{{meeting.venue | limitTo : 30}} {{meeting.venue.length}}</span>
-        </div>
-
-        <a href="" ui-sref="main.meeting({_id: meeting._id})">Więcej</a>
-  		</div>
-  	</div>
+    </div>
   </div>
+</div>
+
+<div class="meetings-list-pagination">
+  <ul class="pagination text-center">
+      <li ng-repeat="page in meetingsCtrl.pagination" ng-class="{'current': page.offset === meetingsCtrl.currentOffset}">
+        <a ui-sref="main.meetingsInCategorySearch.list({ offset: page.offset })" ng-class="{'disabled': page.offset === meetingsCtrl.currentOffset}">{{page.number}}</a>
+      </li>
+  </ul>
 </div>

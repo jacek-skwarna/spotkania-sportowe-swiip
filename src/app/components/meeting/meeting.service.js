@@ -63,31 +63,18 @@
     }
 
     function updateMeeting(newData) {
-      var meeting = this;
       var meetingData = {};
 
       if (typeof newData !== 'undefined') {
         angular.extend(meetingData, newData);
       }
 
-      return api.updateMeeting(meetingData).then(
-        function (updatedMeeting) {
-          $log.log('updatedMeeting: ' + angular.toJson(updatedMeeting));
-          meeting.data = newData;
-          return updatedMeeting.results;
-        },
-        function (err) {
-          $log.log('err: ' + angular.toJson(err));
-          return err;
-        }
-      );
+      return api.updateMeeting(meetingData);
     }
 
     /**
     * @description
-    *   joinMeeting function assigns user with a given id to the meeting as a participant. It returns promise object.
-    * @param userId
-    *   it's an id of the user who wants to be assigned to meeting
+    *   joinMeeting function assigns current user to the meeting as a participant. It returns promise object.
     * @param meetingId
     *   it's an id of the meeting which the user wants to be assigned to
     */
@@ -97,21 +84,12 @@
 
     /**
     * @description
-    *   leaveMeeting function is to unassign user with a given id from the meeting. It returns promise object.
-    * @param userId
-    *   it's an id of the user who wants to be unassigned from meeting
+    *   leaveMeeting function is to unassign current user from with a given _id. It returns promise object.
     * @param meetingId
     *   it's an id of the meeting which the user wants to be unassigned from
     */
-    function leaveMeeting(userId, meetingId) {
-      return api.meetingProtected({
-        method: 'PUT',
-        data: {
-          operation: 'unassignUser',
-          _id: meetingId,
-          assigned_users_ids: userId
-        }
-      });
+    function leaveMeeting(meetingId) {
+      return api.leaveMeeting({ _id: meetingId });
     }
 
 	}

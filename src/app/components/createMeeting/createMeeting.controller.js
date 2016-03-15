@@ -14,7 +14,10 @@
       vm.saveMeeting = saveMeeting;
       vm.getCoordinates = getCoordinates;
       vm.categories = [];
-      vm.createMeetingInfo = '';
+      vm.infoBoxMessage = {
+        message: '',
+        status: ''
+      };
       vm.meetingModel = {};
 
       categories.getCategories().then(
@@ -30,7 +33,8 @@
       function saveMeeting(meetingObject) {
         return $q(function(resolve, reject) {
           if (typeof meetingObject === 'undefined') {
-            vm.createMeetingInfo = 'Spotkanie nie zostało utworzone. Wypełnij cały formularz.';
+            vm.infoBoxMessage.message = 'Spotkanie nie zostało utworzone. Wypełnij cały formularz.';
+            vm.infoBoxMessage.status = 'alert';
             return reject('Spotkanie nie zostało utworzone. Wypełnij cały formularz.');
           }
 
@@ -40,13 +44,15 @@
           meeting.saveMeeting().then(
             function(results) {
               $log.log('Spotkanie utworzone. Results: ' + angular.toJson(results));
-              vm.createMeetingInfo = 'Spotkanie utworzone.';
+              vm.infoBoxMessage.message = 'Spotkanie utworzone.';
+              vm.infoBoxMessage.status = 'success';
               vm.clearForm();
               return resolve(results);
             },
             function(results) {
               $log.log('Spotkanie nie zostało utworzone. Results: ' + angular.toJson(results));
-              vm.createMeetingInfo = 'Spotkanie nie zostało utworzone.';
+              vm.infoBoxMessage.message = 'Spotkanie nie zostało utworzone.';
+              vm.infoBoxMessage.status = 'alert';
               return reject(results);
             }
           );
